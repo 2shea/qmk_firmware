@@ -13,6 +13,13 @@ enum mitosis_layers
   _FUN
 };
 
+//Mousekeys
+#define MOUSEKEY_DELAY 50
+#define MOUSEKEY_INTERNAL 50
+#define MOUSEKEY_MAX_SPEED 10
+#define MOUSEKEY_TIME_TO_MAX 5
+#define MOUSEKEY_WHEEL_MAX_SPEED 8
+#define MOUSEKEY_WHEEL_TIME_TO_MAX 40
 
 // Fillers to make layering more clear
 #define _______ KC_TRNS
@@ -45,11 +52,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Number layout
  * .--------------------------------------------..--------------------------------------------.
- * |        |        |        |        |        || /      | 7      | 8      | 9      | 0      |
+ * |        | WH_U   |        |  CMD+[ |  CMD+] || /      | 7      | 8      | 9      | 0      |
  * |--------+--------+--------+--------+--------||--------+--------+--------+--------+--------|
- * |        |        |        |        |        || *      | 4      | 5      | 6      | +      |
+ * |        | WH_D   | MS_U   |CMD+LEFT|CMD+RGHT|| *      | 4      | 5      | 6      | +      |
  * |--------+--------+--------+--------+--------||--------+--------+--------+--------+--------|
- * |        |        |        |        |        || -      | 1      | 2      | 3      | =      |
+ * |  BTN2  | MS_L   | MS_D   | MS_R   | BTN1   || -      | 1      | 2      | 3      | =      |
  * '--------+--------+--------+--------+--------||--------+--------+--------+--------+--------'
  *          |        |        |        |        ||        |        |        |        |
  *          |--------+--------+--------+--------||--------+--------+--------+--------|
@@ -58,9 +65,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
 [_NUM] = {
-  {_______, _______, _______, LGUI(KC_LBRC), LGUI(KC_RBRC),       KC_PSLS, KC_7,    KC_8,    KC_9,    KC_0},
-  {_______, _______, _______, LGUI(KC_LEFT), LGUI(KC_RGHT),       KC_PAST, KC_4,    KC_5,    KC_6,    KC_PPLS},
-  {_______, _______, _______, _______,       _______,             KC_MINS, KC_1,    KC_2,    KC_3,    KC_EQL},
+  {_______, KC_WH_U, _______, LGUI(KC_LBRC), LGUI(KC_RBRC),       KC_PSLS, KC_7,    KC_8,    KC_9,    KC_0},
+  {_______, KC_WH_D, KC_MS_U, LGUI(KC_LEFT), LGUI(KC_RGHT),       KC_PAST, KC_4,    KC_5,    KC_6,    KC_PPLS},
+  {KC_BTN2, KC_MS_L, KC_MS_D, KC_MS_R,       KC_BTN1,             KC_MINS, KC_1,    KC_2,    KC_3,    KC_EQL},
   {XXXXXXX, _______, _______, ___M___,       _______,             _______, ___M___, _______, _______, XXXXXXX},
   {XXXXXXX, _______, _______, MO(_FUN),      LGUI(KC_ENT),        KC_PENT, MO(_FUN),_______, _______, XXXXXXX},
 },
