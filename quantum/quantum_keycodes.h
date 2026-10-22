@@ -13,635 +13,267 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef QUANTUM_KEYCODES_H
-#define QUANTUM_KEYCODES_H
 
-#ifndef MIDI_ENABLE_STRICT
-#define MIDI_ENABLE_STRICT 0
-#endif
-
-#if !MIDI_ENABLE_STRICT || (defined(MIDI_ENABLE) && defined(MIDI_ADVANCED))
-#ifndef MIDI_TONE_KEYCODE_OCTAVES
-#define MIDI_TONE_KEYCODE_OCTAVES 3
-#endif
-#endif
-
-// Fillers to make layering more clear
-#define _______ KC_TRNS
-#define XXXXXXX KC_NO
-
-enum quantum_keycodes {
-    // Ranges used in shortucuts - not to be used directly
-    QK_TMK                = 0x0000,
-    QK_TMK_MAX            = 0x00FF,
-    QK_MODS               = 0x0100,
-    QK_LCTL               = 0x0100,
-    QK_LSFT               = 0x0200,
-    QK_LALT               = 0x0400,
-    QK_LGUI               = 0x0800,
-    QK_RMODS_MIN          = 0x1000,
-    QK_RCTL               = 0x1100,
-    QK_RSFT               = 0x1200,
-    QK_RALT               = 0x1400,
-    QK_RGUI               = 0x1800,
-    QK_MODS_MAX           = 0x1FFF,
-    QK_FUNCTION           = 0x2000,
-    QK_FUNCTION_MAX       = 0x2FFF,
-    QK_MACRO              = 0x3000,
-    QK_MACRO_MAX          = 0x3FFF,
-    QK_LAYER_TAP          = 0x4000,
-    QK_LAYER_TAP_MAX      = 0x4FFF,
-    QK_TO                 = 0x5000,
-    QK_TO_MAX             = 0x50FF,
-    QK_MOMENTARY          = 0x5100,
-    QK_MOMENTARY_MAX      = 0x51FF,
-    QK_DEF_LAYER          = 0x5200,
-    QK_DEF_LAYER_MAX      = 0x52FF,
-    QK_TOGGLE_LAYER       = 0x5300,
-    QK_TOGGLE_LAYER_MAX   = 0x53FF,
-    QK_ONE_SHOT_LAYER     = 0x5400,
-    QK_ONE_SHOT_LAYER_MAX = 0x54FF,
-    QK_ONE_SHOT_MOD       = 0x5500,
-    QK_ONE_SHOT_MOD_MAX   = 0x55FF,
-#ifndef DISABLE_CHORDING
-    QK_CHORDING           = 0x5600,
-    QK_CHORDING_MAX       = 0x56FF,
-#endif
-    QK_TAP_DANCE          = 0x5700,
-    QK_TAP_DANCE_MAX      = 0x57FF,
-    QK_LAYER_TAP_TOGGLE   = 0x5800,
-    QK_LAYER_TAP_TOGGLE_MAX = 0x58FF,
-#ifdef STENO_ENABLE
-    QK_STENO              = 0x5A00,
-    QK_STENO_BOLT         = 0x5A30,
-    QK_STENO_GEMINI       = 0x5A31,
-    QK_STENO_MAX          = 0x5A3F,
-#endif
-    QK_MOD_TAP            = 0x6000,
-    QK_MOD_TAP_MAX        = 0x7FFF,
-#if defined(UNICODEMAP_ENABLE) && defined(UNICODE_ENABLE)
-    #error "Cannot enable both UNICODEMAP && UNICODE"
-#endif
-#ifdef UNICODE_ENABLE
-    QK_UNICODE            = 0x8000,
-    QK_UNICODE_MAX        = 0xFFFF,
-#endif
-#ifdef UNICODEMAP_ENABLE
-    QK_UNICODE_MAP        = 0x8000,
-    QK_UNICODE_MAP_MAX    = 0x83FF,
-#endif
-
-    // Loose keycodes - to be used directly
-
-    RESET = 0x5C00,
-    DEBUG,
-    MAGIC_SWAP_CONTROL_CAPSLOCK,
-    MAGIC_CAPSLOCK_TO_CONTROL,
-    MAGIC_SWAP_LALT_LGUI,
-    MAGIC_SWAP_RALT_RGUI,
-    MAGIC_NO_GUI,
-    MAGIC_SWAP_GRAVE_ESC,
-    MAGIC_SWAP_BACKSLASH_BACKSPACE,
-    MAGIC_HOST_NKRO,
-    MAGIC_SWAP_ALT_GUI,
-    MAGIC_UNSWAP_CONTROL_CAPSLOCK,
-    MAGIC_UNCAPSLOCK_TO_CONTROL,
-    MAGIC_UNSWAP_LALT_LGUI,
-    MAGIC_UNSWAP_RALT_RGUI,
-    MAGIC_UNNO_GUI,
-    MAGIC_UNSWAP_GRAVE_ESC,
-    MAGIC_UNSWAP_BACKSLASH_BACKSPACE,
-    MAGIC_UNHOST_NKRO,
-    MAGIC_UNSWAP_ALT_GUI,
-    MAGIC_TOGGLE_NKRO,
-    GRAVE_ESC,
-
-    // Leader key
-#ifndef DISABLE_LEADER
-    KC_LEAD,
-#endif
-
-    // Auto Shift setup
-    KC_ASUP,
-    KC_ASDN,
-    KC_ASRP,
-
-    // Audio on/off/toggle
-    AU_ON,
-    AU_OFF,
-    AU_TOG,
-
-#ifdef FAUXCLICKY_ENABLE
-    // Faux clicky
-    FC_ON,
-    FC_OFF,
-    FC_TOG,
-#endif
-
-    // Music mode on/off/toggle
-    MU_ON,
-    MU_OFF,
-    MU_TOG,
-
-    // Music mode cycle
-    MU_MOD,
-
-    // Music voice iterate
-    MUV_IN,
-    MUV_DE,
-
-    // Midi
-#if !MIDI_ENABLE_STRICT || (defined(MIDI_ENABLE) && defined(MIDI_BASIC))
-    MI_ON,  // send midi notes when music mode is enabled
-    MI_OFF, // don't send midi notes when music mode is enabled
-#endif
-
-#if !MIDI_ENABLE_STRICT || (defined(MIDI_ENABLE) && defined(MIDI_ADVANCED))
-    MIDI_TONE_MIN,
-
-#if !MIDI_ENABLE_STRICT || MIDI_TONE_KEYCODE_OCTAVES > 0
-    MI_C = MIDI_TONE_MIN,
-    MI_Cs,
-    MI_Db = MI_Cs,
-    MI_D,
-    MI_Ds,
-    MI_Eb = MI_Ds,
-    MI_E,
-    MI_F,
-    MI_Fs,
-    MI_Gb = MI_Fs,
-    MI_G,
-    MI_Gs,
-    MI_Ab = MI_Gs,
-    MI_A,
-    MI_As,
-    MI_Bb = MI_As,
-    MI_B,
-#endif
-
-#if !MIDI_ENABLE_STRICT || MIDI_TONE_KEYCODE_OCTAVES > 1
-    MI_C_1,
-    MI_Cs_1,
-    MI_Db_1 = MI_Cs_1,
-    MI_D_1,
-    MI_Ds_1,
-    MI_Eb_1 = MI_Ds_1,
-    MI_E_1,
-    MI_F_1,
-    MI_Fs_1,
-    MI_Gb_1 = MI_Fs_1,
-    MI_G_1,
-    MI_Gs_1,
-    MI_Ab_1 = MI_Gs_1,
-    MI_A_1,
-    MI_As_1,
-    MI_Bb_1 = MI_As_1,
-    MI_B_1,
-#endif
-
-#if !MIDI_ENABLE_STRICT || MIDI_TONE_KEYCODE_OCTAVES > 2
-    MI_C_2,
-    MI_Cs_2,
-    MI_Db_2 = MI_Cs_2,
-    MI_D_2,
-    MI_Ds_2,
-    MI_Eb_2 = MI_Ds_2,
-    MI_E_2,
-    MI_F_2,
-    MI_Fs_2,
-    MI_Gb_2 = MI_Fs_2,
-    MI_G_2,
-    MI_Gs_2,
-    MI_Ab_2 = MI_Gs_2,
-    MI_A_2,
-    MI_As_2,
-    MI_Bb_2 = MI_As_2,
-    MI_B_2,
-#endif
-
-#if !MIDI_ENABLE_STRICT || MIDI_TONE_KEYCODE_OCTAVES > 3
-    MI_C_3,
-    MI_Cs_3,
-    MI_Db_3 = MI_Cs_3,
-    MI_D_3,
-    MI_Ds_3,
-    MI_Eb_3 = MI_Ds_3,
-    MI_E_3,
-    MI_F_3,
-    MI_Fs_3,
-    MI_Gb_3 = MI_Fs_3,
-    MI_G_3,
-    MI_Gs_3,
-    MI_Ab_3 = MI_Gs_3,
-    MI_A_3,
-    MI_As_3,
-    MI_Bb_3 = MI_As_3,
-    MI_B_3,
-#endif
-
-#if !MIDI_ENABLE_STRICT || MIDI_TONE_KEYCODE_OCTAVES > 4
-    MI_C_4,
-    MI_Cs_4,
-    MI_Db_4 = MI_Cs_4,
-    MI_D_4,
-    MI_Ds_4,
-    MI_Eb_4 = MI_Ds_4,
-    MI_E_4,
-    MI_F_4,
-    MI_Fs_4,
-    MI_Gb_4 = MI_Fs_4,
-    MI_G_4,
-    MI_Gs_4,
-    MI_Ab_4 = MI_Gs_4,
-    MI_A_4,
-    MI_As_4,
-    MI_Bb_4 = MI_As_4,
-    MI_B_4,
-#endif
-
-#if !MIDI_ENABLE_STRICT || MIDI_TONE_KEYCODE_OCTAVES > 5
-    MI_C_5,
-    MI_Cs_5,
-    MI_Db_5 = MI_Cs_5,
-    MI_D_5,
-    MI_Ds_5,
-    MI_Eb_5 = MI_Ds_5,
-    MI_E_5,
-    MI_F_5,
-    MI_Fs_5,
-    MI_Gb_5 = MI_Fs_5,
-    MI_G_5,
-    MI_Gs_5,
-    MI_Ab_5 = MI_Gs_5,
-    MI_A_5,
-    MI_As_5,
-    MI_Bb_5 = MI_As_5,
-    MI_B_5,
-#endif
-
-#if !MIDI_ENABLE_STRICT || MIDI_TONE_KEYCODE_OCTAVES > 5
-    MIDI_TONE_MAX = MI_B_5,
-#elif MIDI_TONE_KEYCODE_OCTAVES > 4
-    MIDI_TONE_MAX = MI_B_4,
-#elif MIDI_TONE_KEYCODE_OCTAVES > 3
-    MIDI_TONE_MAX = MI_B_3,
-#elif MIDI_TONE_KEYCODE_OCTAVES > 2
-    MIDI_TONE_MAX = MI_B_2,
-#elif MIDI_TONE_KEYCODE_OCTAVES > 1
-    MIDI_TONE_MAX = MI_B_1,
-#elif MIDI_TONE_KEYCODE_OCTAVES > 0
-    MIDI_TONE_MAX = MI_B,
-#endif
-
-    MIDI_OCTAVE_MIN,
-    MI_OCT_N2 = MIDI_OCTAVE_MIN,
-    MI_OCT_N1,
-    MI_OCT_0,
-    MI_OCT_1,
-    MI_OCT_2,
-    MI_OCT_3,
-    MI_OCT_4,
-    MI_OCT_5,
-    MI_OCT_6,
-    MI_OCT_7,
-    MIDI_OCTAVE_MAX = MI_OCT_7,
-    MI_OCTD, // octave down
-    MI_OCTU, // octave up
-
-    MIDI_TRANSPOSE_MIN,
-    MI_TRNS_N6 = MIDI_TRANSPOSE_MIN,
-    MI_TRNS_N5,
-    MI_TRNS_N4,
-    MI_TRNS_N3,
-    MI_TRNS_N2,
-    MI_TRNS_N1,
-    MI_TRNS_0,
-    MI_TRNS_1,
-    MI_TRNS_2,
-    MI_TRNS_3,
-    MI_TRNS_4,
-    MI_TRNS_5,
-    MI_TRNS_6,
-    MIDI_TRANSPOSE_MAX = MI_TRNS_6,
-    MI_TRNSD, // transpose down
-    MI_TRNSU, // transpose up
-
-    MIDI_VELOCITY_MIN,
-    MI_VEL_1 = MIDI_VELOCITY_MIN,
-    MI_VEL_2,
-    MI_VEL_3,
-    MI_VEL_4,
-    MI_VEL_5,
-    MI_VEL_6,
-    MI_VEL_7,
-    MI_VEL_8,
-    MI_VEL_9,
-    MI_VEL_10,
-    MIDI_VELOCITY_MAX = MI_VEL_10,
-    MI_VELD, // velocity down
-    MI_VELU, // velocity up
-
-    MIDI_CHANNEL_MIN,
-    MI_CH1 = MIDI_CHANNEL_MIN,
-    MI_CH2,
-    MI_CH3,
-    MI_CH4,
-    MI_CH5,
-    MI_CH6,
-    MI_CH7,
-    MI_CH8,
-    MI_CH9,
-    MI_CH10,
-    MI_CH11,
-    MI_CH12,
-    MI_CH13,
-    MI_CH14,
-    MI_CH15,
-    MI_CH16,
-    MIDI_CHANNEL_MAX = MI_CH16,
-    MI_CHD, // previous channel
-    MI_CHU, // next channel
-
-    MI_ALLOFF, // all notes off
-
-    MI_SUS, // sustain
-    MI_PORT, // portamento
-    MI_SOST, // sostenuto
-    MI_SOFT, // soft pedal
-    MI_LEG,  // legato
-
-    MI_MOD, // modulation
-    MI_MODSD, // decrease modulation speed
-    MI_MODSU, // increase modulation speed
-#endif // MIDI_ADVANCED
-
-    // Backlight functionality
-    BL_0,
-    BL_1,
-    BL_2,
-    BL_3,
-    BL_4,
-    BL_5,
-    BL_6,
-    BL_7,
-    BL_8,
-    BL_9,
-    BL_10,
-    BL_11,
-    BL_12,
-    BL_13,
-    BL_14,
-    BL_15,
-    BL_DEC,
-    BL_INC,
-    BL_TOGG,
-    BL_STEP,
-
-    // RGB functionality
-    RGB_TOG,
-    RGB_MOD,
-    RGB_SMOD,
-    RGB_HUI,
-    RGB_HUD,
-    RGB_SAI,
-    RGB_SAD,
-    RGB_VAI,
-    RGB_VAD,
-    RGB_MODE_PLAIN,
-    RGB_MODE_BREATHE,
-    RGB_MODE_RAINBOW,
-    RGB_MODE_SWIRL,
-    RGB_MODE_SNAKE,
-    RGB_MODE_KNIGHT,
-    RGB_MODE_XMAS,
-    RGB_MODE_GRADIENT,
-
-    // Left shift, open paren
-    KC_LSPO,
-
-    // Right shift, close paren
-    KC_RSPC,
-
-    // Printing
-    PRINT_ON,
-    PRINT_OFF,
-
-    // output selection
-    OUT_AUTO,
-    OUT_USB,
-#ifdef BLUETOOTH_ENABLE
-    OUT_BT,
-#endif
-
-#ifdef KEY_LOCK_ENABLE
-    KC_LOCK,
-#endif
-
-#ifdef TERMINAL_ENABLE
-    TERM_ON,
-    TERM_OFF,
-#endif
-
-    // always leave at the end
-    SAFE_RANGE
-};
-
-// Ability to use mods in layouts
-#define LCTL(kc) (kc | QK_LCTL)
-#define LSFT(kc) (kc | QK_LSFT)
-#define LALT(kc) (kc | QK_LALT)
-#define LGUI(kc) (kc | QK_LGUI)
-#define RCTL(kc) (kc | QK_RCTL)
-#define RSFT(kc) (kc | QK_RSFT)
-#define RALT(kc) (kc | QK_RALT)
-#define RGUI(kc) (kc | QK_RGUI)
-
-#define HYPR(kc) (kc | QK_LCTL | QK_LSFT | QK_LALT | QK_LGUI)
-#define MEH(kc)  (kc | QK_LCTL | QK_LSFT | QK_LALT)
-#define LCAG(kc) (kc | QK_LCTL | QK_LALT | QK_LGUI)
-#define ALTG(kc) (kc | QK_RCTL | QK_RALT)
-#define SCMD(kc) (kc | QK_LGUI | QK_LSFT)
-#define SWIN(kc) SCMD(kc)
-#define LCA(kc) (kc | QK_LCTL | QK_LALT)
-
-#define MOD_HYPR 0xf
-#define MOD_MEH 0x7
-
-
-// Aliases for shifted symbols
-// Each key has a 4-letter code, and some have longer aliases too.
-// While the long aliases are descriptive, the 4-letter codes
-// make for nicer grid layouts (everything lines up), and are
-// the preferred style for Quantum.
-#define KC_TILD LSFT(KC_GRV)    // ~
-#define KC_TILDE    KC_TILD
-
-#define KC_EXLM LSFT(KC_1)      // !
-#define KC_EXCLAIM  KC_EXLM
-
-#define KC_AT   LSFT(KC_2)      // @
-
-#define KC_HASH LSFT(KC_3)      // #
-
-#define KC_DLR  LSFT(KC_4)      // $
-#define KC_DOLLAR   KC_DLR
-
-#define KC_PERC LSFT(KC_5)      // %
-#define KC_PERCENT  KC_PERC
-
-#define KC_CIRC LSFT(KC_6)      // ^
-#define KC_CIRCUMFLEX   KC_CIRC
-
-#define KC_AMPR LSFT(KC_7)      // &
-#define KC_AMPERSAND    KC_AMPR
-
-#define KC_ASTR LSFT(KC_8)      // *
-#define KC_ASTERISK KC_ASTR
-
-#define KC_LPRN LSFT(KC_9)      // (
-#define KC_LEFT_PAREN   KC_LPRN
-
-#define KC_RPRN LSFT(KC_0)      // )
-#define KC_RIGHT_PAREN  KC_RPRN
-
-#define KC_UNDS LSFT(KC_MINS)   // _
-#define KC_UNDERSCORE   KC_UNDS
-
-#define KC_PLUS LSFT(KC_EQL)    // +
-
-#define KC_LCBR LSFT(KC_LBRC)   // {
-#define KC_LEFT_CURLY_BRACE KC_LCBR
-
-#define KC_RCBR LSFT(KC_RBRC)   // }
-#define KC_RIGHT_CURLY_BRACE    KC_RCBR
-
-#define KC_LABK LSFT(KC_COMM)   // <
-#define KC_LEFT_ANGLE_BRACKET   KC_LABK
-
-#define KC_RABK LSFT(KC_DOT)    // >
-#define KC_RIGHT_ANGLE_BRACKET  KC_RABK
-
-#define KC_COLN LSFT(KC_SCLN)   // :
-#define KC_COLON    KC_COLN
-
-#define KC_PIPE LSFT(KC_BSLS)   // |
-
-#define KC_LT LSFT(KC_COMM)     // <
-
-#define KC_GT LSFT(KC_DOT)      // >
-
-#define KC_QUES LSFT(KC_SLSH)   // ?
-#define KC_QUESTION KC_QUES
-
-#define KC_DQT LSFT(KC_QUOT)   // "
-#define KC_DOUBLE_QUOTE KC_DQT
-#define KC_DQUO KC_DQT
-
-#define KC_DELT KC_DELETE // Del key (four letter code)
-
-// Alias for function layers than expand past FN31
-#define FUNC(kc) (kc | QK_FUNCTION)
-
-// Aliases
+#pragma once
+
+//  Pull in dd keycodes to maintain header compatibility
+#include "keycodes.h"
+
+// US ANSI shifted keycode aliases
+#include "keymap_us.h"
+
+// TODO: sub-ranges?
+// clang-format off
+#define QK_LCTL                0x0100
+#define QK_LSFT                0x0200
+#define QK_LALT                0x0400
+#define QK_LGUI                0x0800
+#define QK_RMODS_MIN           0x1000
+#define QK_RCTL                0x1100
+#define QK_RSFT                0x1200
+#define QK_RALT                0x1400
+#define QK_RGUI                0x1800
+
+#define SAFE_RANGE             QK_USER
+// clang-format on
+
+// Generic decoding for the whole QK_MODS range
+#define QK_MODS_GET_MODS(kc) (((kc) >> 8) & 0x1F)
+#define QK_MODS_GET_BASIC_KEYCODE(kc) ((kc) & 0xFF)
+
+// Modified keycodes
+#define LCTL(kc) (QK_LCTL | (kc))
+#define LSFT(kc) (QK_LSFT | (kc))
+#define LALT(kc) (QK_LALT | (kc))
+#define LGUI(kc) (QK_LGUI | (kc))
+
+#define LOPT(kc) LALT(kc)
+#define LCMD(kc) LGUI(kc)
+#define LWIN(kc) LGUI(kc)
+
+#define C(kc) LCTL(kc)
 #define S(kc) LSFT(kc)
-#define F(kc) FUNC(kc)
+#define A(kc) LALT(kc)
+#define G(kc) LGUI(kc)
 
-#define M(kc) (kc | QK_MACRO)
+#define LCS(kc) (QK_LCTL | QK_LSFT | (kc))
+#define LCA(kc) (QK_LCTL | QK_LALT | (kc))
+#define LCG(kc) (QK_LCTL | QK_LGUI | (kc))
+#define LSA(kc) (QK_LSFT | QK_LALT | (kc))
+#define LSG(kc) (QK_LSFT | QK_LGUI | (kc))
+#define LAG(kc) (QK_LALT | QK_LGUI | (kc))
+#define LCSG(kc) (QK_LCTL | QK_LSFT | QK_LGUI | (kc))
+#define LCAG(kc) (QK_LCTL | QK_LALT | QK_LGUI | (kc))
+#define LSAG(kc) (QK_LSFT | QK_LALT | QK_LGUI | (kc))
 
-#define MACROTAP(kc) (kc | QK_MACRO | FUNC_TAP<<8)
-#define MACRODOWN(...) (record->event.pressed ? MACRO(__VA_ARGS__) : MACRO_NONE)
+#define RCTL(kc) (QK_RCTL | (kc))
+#define RSFT(kc) (QK_RSFT | (kc))
+#define RALT(kc) (QK_RALT | (kc))
+#define RGUI(kc) (QK_RGUI | (kc))
 
-#define KC_GESC GRAVE_ESC
+#define ALGR(kc) RALT(kc)
+#define ROPT(kc) RALT(kc)
+#define RCMD(kc) RGUI(kc)
+#define RWIN(kc) RGUI(kc)
 
-#define RGB_M_P RGB_MODE_PLAIN
-#define RGB_M_B RGB_MODE_BREATHE
-#define RGB_M_R RGB_MODE_RAINBOW
-#define RGB_M_SW RGB_MODE_SWIRL
-#define RGB_M_SN RGB_MODE_SNAKE
-#define RGB_M_K RGB_MODE_KNIGHT
-#define RGB_M_X RGB_MODE_XMAS
-#define RGB_M_G RGB_MODE_GRADIENT
+#define RCA(kc) (QK_RCTL | QK_RALT | (kc))
+#define RCS(kc) (QK_RCTL | QK_RSFT | (kc))
+#define RCG(kc) (QK_RCTL | QK_RGUI | (kc))
+#define RSA(kc) (QK_RSFT | QK_RALT | (kc))
+#define RSG(kc) (QK_RSFT | QK_RGUI | (kc))
+#define RAG(kc) (QK_RALT | QK_RGUI | (kc))
+#define RCSG(kc) (QK_RCTL | QK_RSFT | QK_RGUI | (kc))
+#define RCAG(kc) (QK_RCTL | QK_RALT | QK_RGUI | (kc))
+#define RSAG(kc) (QK_RSFT | QK_RALT | QK_RGUI | (kc))
 
-// L-ayer, T-ap - 256 keycode max, 16 layer max
-#define LT(layer, kc) (kc | QK_LAYER_TAP | ((layer & 0xF) << 8))
+#define HYPR(kc) (QK_LCTL | QK_LSFT | QK_LALT | QK_LGUI | (kc))
+#define MEH(kc) (QK_LCTL | QK_LSFT | QK_LALT | (kc))
 
-#define AG_SWAP MAGIC_SWAP_ALT_GUI
-#define AG_NORM MAGIC_UNSWAP_ALT_GUI
+// GOTO layer - 32 layer max
+#define TO(layer) (QK_TO | ((layer) & 0x1F))
+#define QK_TO_GET_LAYER(kc) ((kc) & 0x1F)
 
-#define BL_ON  BL_9
-#define BL_OFF BL_0
+// Momentary switch layer - 32 layer max
+#define MO(layer) (QK_MOMENTARY | ((layer) & 0x1F))
+#define QK_MOMENTARY_GET_LAYER(kc) ((kc) & 0x1F)
 
-// GOTO layer - 16 layers max
-// when:
-// ON_PRESS    = 1
-// ON_RELEASE  = 2
-// Unless you have a good reason not to do so, prefer  ON_PRESS (1) as your default.
-// In fact, we changed it to assume ON_PRESS for sanity/simplicity. If needed, you can add your own
-// keycode modeled after the old version, kept below for this.
-/* #define TO(layer, when) (layer | QK_TO | (when << 0x4)) */
-#define TO(layer) (layer | QK_TO | (ON_PRESS << 0x4))
+// Set default layer - 32 layer max
+#define DF(layer) (QK_DEF_LAYER | ((layer) & 0x1F))
+#define QK_DEF_LAYER_GET_LAYER(kc) ((kc) & 0x1F)
 
-// Momentary switch layer - 256 layer max
-#define MO(layer) (layer | QK_MOMENTARY)
+// Set persistent default layer - 32 layer max
+#define PDF(layer) (QK_PERSISTENT_DEF_LAYER | ((layer) & 0x1F))
+#define QK_PERSISTENT_DEF_LAYER_GET_LAYER(kc) ((kc) & 0x1F)
 
-// Set default layer - 256 layer max
-#define DF(layer) (layer | QK_DEF_LAYER)
+// Toggle to layer - 32 layer max
+#define TG(layer) (QK_TOGGLE_LAYER | ((layer) & 0x1F))
+#define QK_TOGGLE_LAYER_GET_LAYER(kc) ((kc) & 0x1F)
 
-// Toggle to layer - 256 layer max
-#define TG(layer) (layer | QK_TOGGLE_LAYER)
+// One-shot layer - 32 layer max
+#define OSL(layer) (QK_ONE_SHOT_LAYER | ((layer) & 0x1F))
+#define QK_ONE_SHOT_LAYER_GET_LAYER(kc) ((kc) & 0x1F)
 
-// One-shot layer - 256 layer max
-#define OSL(layer) (layer | QK_ONE_SHOT_LAYER)
+// L-ayer M-od: Momentary switch layer with modifiers active - 16 layer max
+#define LM(layer, mod) (QK_LAYER_MOD | (((layer) & 0xF) << 5) | ((mod) & 0x1F))
+#define QK_LAYER_MOD_GET_LAYER(kc) (((kc) >> 5) & 0xF)
+#define QK_LAYER_MOD_GET_MODS(kc) ((kc) & 0x1F)
 
 // One-shot mod
-#define OSM(mod) ((mod) | QK_ONE_SHOT_MOD)
+#define OSM(mod) (QK_ONE_SHOT_MOD | ((mod) & 0x1F))
+#define QK_ONE_SHOT_MOD_GET_MODS(kc) ((kc) & 0x1F)
 
-// Layer tap-toggle
-#define TT(layer) (layer | QK_LAYER_TAP_TOGGLE)
+#define OS_LCTL OSM(MOD_LCTL)
+#define OS_LSFT OSM(MOD_LSFT)
+#define OS_LALT OSM(MOD_LALT)
+#define OS_LGUI OSM(MOD_LGUI)
+
+#define OS_LCS OSM(MOD_LCTL | MOD_LSFT)
+#define OS_LCA OSM(MOD_LCTL | MOD_LALT)
+#define OS_LCG OSM(MOD_LCTL | MOD_LGUI)
+#define OS_LSA OSM(MOD_LSFT | MOD_LALT)
+#define OS_LSG OSM(MOD_LSFT | MOD_LGUI)
+#define OS_LAG OSM(MOD_LALT | MOD_LGUI)
+
+#define OS_LCSG OSM(MOD_LCTL | MOD_LSFT | MOD_LGUI)
+#define OS_LCAG OSM(MOD_LCTL | MOD_LALT | MOD_LGUI)
+#define OS_LSAG OSM(MOD_LSFT | MOD_LALT | MOD_LGUI)
+
+#define OS_RCTL OSM(MOD_RCTL)
+#define OS_RSFT OSM(MOD_RSFT)
+#define OS_RALT OSM(MOD_RALT)
+#define OS_RGUI OSM(MOD_RGUI)
+
+#define OS_RCS OSM(MOD_RCTL | MOD_RSFT)
+#define OS_RCA OSM(MOD_RCTL | MOD_RALT)
+#define OS_RCG OSM(MOD_RCTL | MOD_RGUI)
+#define OS_RSA OSM(MOD_RSFT | MOD_RALT)
+#define OS_RSG OSM(MOD_RSFT | MOD_RGUI)
+#define OS_RAG OSM(MOD_RALT | MOD_RGUI)
+
+#define OS_RCSG OSM(MOD_RCTL | MOD_RSFT | MOD_RGUI)
+#define OS_RCAG OSM(MOD_RCTL | MOD_RALT | MOD_RGUI)
+#define OS_RSAG OSM(MOD_RSFT | MOD_RALT | MOD_RGUI)
+
+#define OS_MEH OSM(MOD_LCTL | MOD_LSFT | MOD_LALT)
+#define OS_HYPR OSM(MOD_LCTL | MOD_LSFT | MOD_LALT | MOD_LGUI)
+
+// Layer tap-toggle - 32 layer max
+#define TT(layer) (QK_LAYER_TAP_TOGGLE | ((layer) & 0x1F))
+#define QK_LAYER_TAP_TOGGLE_GET_LAYER(kc) ((kc) & 0x1F)
+
+// L-ayer, T-ap - 256 keycode max, 16 layer max
+#define LT(layer, kc) (QK_LAYER_TAP | (((layer) & 0xF) << 8) | ((kc) & 0xFF))
+#define QK_LAYER_TAP_GET_LAYER(kc) (((kc) >> 8) & 0xF)
+#define QK_LAYER_TAP_GET_TAP_KEYCODE(kc) ((kc) & 0xFF)
 
 // M-od, T-ap - 256 keycode max
-#define MT(mod, kc) (kc | QK_MOD_TAP | (((mod) & 0x1F) << 8))
+#define MT(mod, kc) (QK_MOD_TAP | (((mod) & 0x1F) << 8) | ((kc) & 0xFF))
+#define QK_MOD_TAP_GET_MODS(kc) (((kc) >> 8) & 0x1F)
+#define QK_MOD_TAP_GET_TAP_KEYCODE(kc) ((kc) & 0xFF)
 
-#define CTL_T(kc) MT(MOD_LCTL, kc)
+// Mod-Tap shortcuts
 #define LCTL_T(kc) MT(MOD_LCTL, kc)
-#define RCTL_T(kc) MT(MOD_RCTL, kc)
-
-#define SFT_T(kc) MT(MOD_LSFT, kc)
 #define LSFT_T(kc) MT(MOD_LSFT, kc)
-#define RSFT_T(kc) MT(MOD_RSFT, kc)
-
-#define ALT_T(kc) MT(MOD_LALT, kc)
 #define LALT_T(kc) MT(MOD_LALT, kc)
-#define RALT_T(kc) MT(MOD_RALT, kc)
-#define ALGR_T(kc) MT(MOD_RALT, kc) // dual-function AltGR
-
-#define GUI_T(kc) MT(MOD_LGUI, kc)
 #define LGUI_T(kc) MT(MOD_LGUI, kc)
+
+#define CTL_T(kc) LCTL_T(kc)
+#define SFT_T(kc) LSFT_T(kc)
+#define ALT_T(kc) LALT_T(kc)
+#define GUI_T(kc) LGUI_T(kc)
+
+#define LOPT_T(kc) LALT_T(kc)
+#define LCMD_T(kc) LGUI_T(kc)
+#define LWIN_T(kc) LGUI_T(kc)
+
+#define OPT_T(kc) LOPT_T(kc)
+#define CMD_T(kc) LCMD_T(kc)
+#define WIN_T(kc) LWIN_T(kc)
+
+#define LCS_T(kc) MT(MOD_LCTL | MOD_LSFT, kc)
+#define LCA_T(kc) MT(MOD_LCTL | MOD_LALT, kc)
+#define LCG_T(kc) MT(MOD_LCTL | MOD_LGUI, kc)
+#define LSA_T(kc) MT(MOD_LSFT | MOD_LALT, kc)
+#define LSG_T(kc) MT(MOD_LSFT | MOD_LGUI, kc)
+#define LAG_T(kc) MT(MOD_LALT | MOD_LGUI, kc)
+#define LCSG_T(kc) MT(MOD_LCTL | MOD_LSFT | MOD_LGUI, kc)
+#define LCAG_T(kc) MT(MOD_LCTL | MOD_LALT | MOD_LGUI, kc)
+#define LSAG_T(kc) MT(MOD_LSFT | MOD_LALT | MOD_LGUI, kc)
+
+#define RCTL_T(kc) MT(MOD_RCTL, kc)
+#define RSFT_T(kc) MT(MOD_RSFT, kc)
+#define RALT_T(kc) MT(MOD_RALT, kc)
 #define RGUI_T(kc) MT(MOD_RGUI, kc)
 
-#define C_S_T(kc) MT((MOD_LCTL | MOD_LSFT), kc) // Control + Shift e.g. for gnome-terminal
-#define MEH_T(kc) MT((MOD_LCTL | MOD_LSFT | MOD_LALT), kc) // Meh is a less hyper version of the Hyper key -- doesn't include Win or Cmd, so just alt+shift+ctrl
-#define LCAG_T(kc) MT((MOD_LCTL | MOD_LALT | MOD_LGUI), kc) // Left control alt and gui
-#define RCAG_T(kc) MT((MOD_RCTL | MOD_RALT | MOD_RGUI), kc) // Right control alt and gui
-#define ALL_T(kc) MT((MOD_LCTL | MOD_LSFT | MOD_LALT | MOD_LGUI), kc) // see http://brettterpstra.com/2012/12/08/a-useful-caps-lock-key/
-#define SCMD_T(kc) MT((MOD_LGUI | MOD_LSFT), kc)
-#define SWIN_T(kc) SCMD_T(kc)
-#define LCA_T(kc) MT((MOD_LCTL | MOD_LALT), kc) // Left control and left alt
+#define ROPT_T(kc) RALT_T(kc)
+#define ALGR_T(kc) RALT_T(kc)
+#define RCMD_T(kc) RGUI_T(kc)
+#define RWIN_T(kc) RGUI_T(kc)
+
+#define RCS_T(kc) MT(MOD_RCTL | MOD_RSFT, kc)
+#define RCA_T(kc) MT(MOD_RCTL | MOD_RALT, kc)
+#define RCG_T(kc) MT(MOD_RCTL | MOD_RGUI, kc)
+#define RSA_T(kc) MT(MOD_RSFT | MOD_RALT, kc)
+#define RSG_T(kc) MT(MOD_RSFT | MOD_RGUI, kc)
+#define RAG_T(kc) MT(MOD_RALT | MOD_RGUI, kc)
+#define RCSG_T(kc) MT(MOD_RCTL | MOD_RSFT | MOD_RGUI, kc)
+#define RCAG_T(kc) MT(MOD_RCTL | MOD_RALT | MOD_RGUI, kc)
+#define RSAG_T(kc) MT(MOD_RSFT | MOD_RALT | MOD_RGUI, kc)
+
+#define MEH_T(kc) MT(MOD_LCTL | MOD_LSFT | MOD_LALT, kc)
+#define HYPR_T(kc) MT(MOD_LCTL | MOD_LSFT | MOD_LALT | MOD_LGUI, kc)
 
 // Dedicated keycode versions for Hyper and Meh, if you want to use them as standalone keys rather than mod-tap
 #define KC_HYPR HYPR(KC_NO)
-#define KC_MEH  MEH(KC_NO)
+#define KC_MEH MEH(KC_NO)
 
-#ifdef UNICODE_ENABLE
-    // For sending unicode codes.
-    // You may not send codes over 7FFF -- this supports most of UTF8.
-    // To have a key that sends out Œ, go UC(0x0152)
-    #define UNICODE(n) (n | QK_UNICODE)
-    #define UC(n) UNICODE(n)
-#endif
+// Unicode aliases
+// UNICODE_ENABLE - Allows Unicode input up to 0x7FFF
+#define UC(c) (QK_UNICODE | (c))
+#define QK_UNICODE_GET_CODE_POINT(kc) ((kc) & 0x7FFF)
 
-#ifdef UNICODEMAP_ENABLE
-    #define X(n) (n | QK_UNICODE_MAP)
-#endif
+// UNICODEMAP_ENABLE - Allows Unicode input up to 0x10FFFF, requires unicode_map
+#define UM(i) (QK_UNICODEMAP | ((i) & 0x3FFF))
+#define QK_UNICODEMAP_GET_INDEX(kc) ((kc) & 0x3FFF)
 
-#endif // QUANTUM_KEYCODES_H
+#define UP(i, j) (QK_UNICODEMAP_PAIR | ((i) & 0x7F) | (((j) & 0x7F) << 7)) // 127 max i and j
+#define QK_UNICODEMAP_PAIR_GET_UNSHIFTED_INDEX(kc) ((kc) & 0x7F)
+#define QK_UNICODEMAP_PAIR_GET_SHIFTED_INDEX(kc) (((kc) >> 7) & 0x7F)
+
+// Swap Hands
+#define SH_T(kc) (QK_SWAP_HANDS | ((kc) & 0xFF))
+#define QK_SWAP_HANDS_GET_TAP_KEYCODE(kc) ((kc) & 0xFF)
+
+// Tap dance
+#define TD(i) (QK_TAP_DANCE | ((i) & 0xFF))
+#define QK_TAP_DANCE_GET_INDEX(kc) ((kc) & 0xFF)
+
+// MIDI aliases
+#define MIDI_TONE_MIN QK_MIDI_NOTE_C_0
+#define MIDI_TONE_MAX QK_MIDI_NOTE_B_5
+#define MIDI_OCTAVE_MIN QK_MIDI_OCTAVE_N2
+#define MIDI_OCTAVE_MAX QK_MIDI_OCTAVE_7
+#define MIDI_TRANSPOSE_MIN QK_MIDI_TRANSPOSE_N6
+#define MIDI_TRANSPOSE_MAX QK_MIDI_TRANSPOSE_6
+#define MIDI_VELOCITY_MIN QK_MIDI_VELOCITY_0
+#define MIDI_VELOCITY_MAX QK_MIDI_VELOCITY_10
+#define MIDI_CHANNEL_MIN QK_MIDI_CHANNEL_1
+#define MIDI_CHANNEL_MAX QK_MIDI_CHANNEL_16
+
+// TODO: somehow migrate sequencer to DD?
+#include "sequencer.h"
+
+#define SEQUENCER_STEP_MIN (QK_SEQUENCER + 0xF)
+#define SEQUENCER_STEP_MAX (SEQUENCER_STEP_MIN + SEQUENCER_STEPS)
+
+#define SEQUENCER_RESOLUTION_MIN (SEQUENCER_STEP_MAX + 1)
+#define SEQUENCER_RESOLUTION_MAX (SEQUENCER_RESOLUTION_MIN + SEQUENCER_RESOLUTIONS)
+
+#define SEQUENCER_TRACK_MIN (SEQUENCER_RESOLUTION_MAX + 1)
+#define SEQUENCER_TRACK_MAX (SEQUENCER_TRACK_MIN + SEQUENCER_TRACKS)
+
+#define SQ_S(n) (n < SEQUENCER_STEPS ? SEQUENCER_STEP_MIN + n : KC_NO)
+#define SQ_R(n) (n < SEQUENCER_RESOLUTIONS ? SEQUENCER_RESOLUTION_MIN + n : KC_NO)
+#define SQ_T(n) (n < SEQUENCER_TRACKS ? SEQUENCER_TRACK_MIN + n : KC_NO)
+
+#include "quantum_keycodes_legacy.h"

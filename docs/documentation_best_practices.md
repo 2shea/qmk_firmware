@@ -4,7 +4,7 @@ This page exists to document best practices when writing documentation for QMK. 
 
 # Page Opening
 
-Your documentation page should generally start with an H1 heading, followed by a 1 paragrah description of what the user will find on this page. Keep in mind that this heading and paragraph will sit next to the Table of Contents, so keep the heading short and avoid long strings with no whitespace.
+Your documentation page should generally start with an H1 heading, followed by a 1 paragraph description of what the user will find on this page. Keep in mind that this heading and paragraph will sit next to the Table of Contents, so keep the heading short and avoid long strings with no whitespace.
 
 Example:
 
@@ -14,6 +14,10 @@ Example:
 This page covers my super cool feature. You can use this feature to make coffee, squeeze fresh oj, and have an egg mcmuffin and hashbrowns delivered from your local macca's by drone.
 ```
 
+# Paragraphs
+
+Do not use hard line breaks within the raw Markdown for each paragraph. These are optional in Markdown, and have no effect on the rendered output. This means each raw paragraph will be a single long line in your editor (best viewed with line wrapping enabled).
+
 # Headings
 
 Your page should generally have multiple "H1" headings. Only H1 and H2 headings will included in the Table of Contents, so plan them out appropriately. Excess width should be avoided in H1 and H2 headings to prevent the Table of Contents from getting too wide.
@@ -22,63 +26,38 @@ Your page should generally have multiple "H1" headings. Only H1 and H2 headings 
 
 You can have styled hint blocks drawn around text to draw attention to it.
 
-```
-{% hint style='info' %}
-This uses `hint style='info'`
-{% endhint %}
-```
-
-### Examples:
-
-{% hint style='info' %}
-This uses `hint style='info'`
-{% endhint %}
-
-{% hint style='tip' %}
-This uses `hint style='tip'`
-{% endhint %}
-
-{% hint style='danger' %}
-This uses `hint style='danger'`
-{% endhint %}
-
-{% hint style='working' %}
-This uses `hint style='working'`
-{% endhint %}
-
-# Styled Terminal Blocks
-
-You can present styled terminal blocks by including special tokens inside your text block.
+### Important
 
 ```
-\`\`\`
-**[terminal]
-**[prompt foo@joe]**[path ~]**[delimiter  $ ]**[command ./myscript]
-Normal output line. Nothing special here...
-But...
-You can add some colors. What about a warning message?
-**[warning [WARNING] The color depends on the theme. Could look normal too]
-What about an error message?
-**[error [ERROR] This is not the error you are looking for]
-\`\`\`
+::: warning
+This is important
+:::
 ```
 
-### Example
+Renders as:
+
+::: warning
+This is important
+:::
+
+### General Tips
 
 ```
-**[terminal]
-**[prompt foo@joe]**[path ~]**[delimiter  $ ]**[command ./myscript]
-Normal output line. Nothing special here...
-But...
-You can add some colors. What about a warning message?
-**[warning [WARNING] The color depends on the theme. Could look normal too]
-What about an error message?
-**[error [ERROR] This is not the error you are looking for]
+::: tip
+This is a helpful tip.
+:::
 ```
+
+Renders as:
+
+::: tip
+This is a helpful tip.
+:::
+
 
 # Documenting Features
 
-If you create a new feature for QMK, create a documentation page for it. It doesn't have to be very long, a few sentances describing your feature and a table listing any relevant keycodes is enough. Here is a basic template:
+If you create a new feature for QMK, create a documentation page for it. It doesn't have to be very long, a few sentences describing your feature and a table listing any relevant keycodes is enough. Here is a basic template:
 
 ```markdown
 # My Cool Feature
@@ -94,4 +73,4 @@ This page describes my cool feature. You can use my cool feature to make coffee 
 |KC_SUGAR||Order Sugar|
 ```
 
-Place your documentation into `docs/feature_<my_cool_feature>.md`, and add that file to the appropriate place in `docs/_summary.md`. If you have added any keycodes be sure to add them to `docs/keycodes.md` with a link back to your feature page.
+Place your documentation into `docs/features/<my_cool_feature>.md`, and add that file to the appropriate place in `docs/_sidebar.json`. If you have added any keycodes be sure to add them to `docs/keycodes.md` with a link back to your feature page.

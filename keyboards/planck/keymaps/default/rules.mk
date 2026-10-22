@@ -1,3 +1,3 @@
-ifndef QUANTUM_DIR
-	include ../../../../Makefile
+ifeq ($(strip $(AUDIO_ENABLE)), yes)
+    SRC += muse.c
 endif

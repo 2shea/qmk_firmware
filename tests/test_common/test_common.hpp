@@ -17,8 +17,11 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 
+extern "C" {
 #include "quantum.h"
+}
 #include "test_driver.hpp"
 #include "test_matrix.h"
+#include "test_keymap_key.hpp"
 #include "keyboard_report_util.hpp"
 #include "test_fixture.hpp"

@@ -1,3 +1,2 @@
-BACKLIGHT_ENABLE = no
-AUDIO_ENABLE = yes
-RGBLIGHT_ENABLE = no
+# Disable unsupported hardware
+BACKLIGHT_SUPPORTED = no

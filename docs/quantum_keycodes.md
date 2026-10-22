@@ -1,22 +1,21 @@
 # Quantum Keycodes
 
-Quantum keycodes allow for easier customisation of your keymap than the basic ones provide, without having to define custom actions.
+Quantum keycodes allow for easier customization of your keymap than the basic ones provide, without having to define custom actions.
 
-All keycodes within quantum are numbers between `0x0000` and `0xFFFF`. Within your `keymap.c` it may look like you have functions and other special cases, but ultimately the C preprocessor will translate those into a single 4 byte integer. QMK has reserved `0x0000` through `0x00FF` for standard keycodes. These are keycodes such as `KC_A`, `KC_1`, and `KC_LCTL`, which are basic keys defined in the USB HID specification. 
+All keycodes within quantum are numbers between `0x0000` and `0xFFFF`. Within your `keymap.c` it may look like you have functions and other special cases, but ultimately the C preprocessor will translate those into a single 4 byte integer. QMK has reserved `0x0000` through `0x00FF` for standard keycodes. These are keycodes such as `KC_A`, `KC_1`, and `KC_LCTL`, which are basic keys defined in the USB HID specification.
 
 On this page we have documented keycodes between `0x00FF` and `0xFFFF` which are used to implement advanced quantum features. If you define your own custom keycodes they will be put into this range as well.
 
-## QMK keycodes
+## QMK Keycodes {#qmk-keycodes}
 
-|Name|Description|
-|----|-----------|
-|`RESET`|Put the keyboard into DFU mode for flashing|
-|`DEBUG`|Toggles debug mode|
-|`KC_GESC`/`GRAVE_ESC`|Acts as escape when pressed normally but when pressed with Shift or GUI will send a ```|
-|`KC_LSPO`|Left shift when held, open paranthesis when tapped|
-|`KC_RSPC`|Right shift when held, close paranthesis when tapped|
-|`KC_LEAD`|The [leader key](feature_leader_key.md)|
-|`KC_LOCK`|The [lock key](feature_key_lock.md)|
-|`FUNC(n)`/`F(n)`|Call `fn_action(n)` (deprecated)|
-|`M(n)`|to call macro n|
-|`MACROTAP(n)`|to macro-tap n idk FIXME|
+|Key              |Aliases  |Description                                                                                                                                      |
+|-----------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------------|
+|`QK_BOOTLOADER`  |`QK_BOOT`|Put the keyboard into bootloader mode for flashing                                                                                               |
+|`QK_DEBUG_TOGGLE`|`DB_TOGG`|Toggle debug mode                                                                                                                                |
+|`QK_CLEAR_EEPROM`|`EE_CLR` |Reinitializes the keyboard's EEPROM (persistent memory)                                                                                          |
+|`QK_MAKE`        |         |Sends `qmk compile -kb (keyboard) -km (keymap)`, or `qmk flash` if shift is held. Puts keyboard into bootloader mode if shift & control are held |
+|`QK_REBOOT`      |`QK_RBT` |Resets the keyboard. Does not load the bootloader                                                                                                |
+
+::: warning
+Note: `QK_MAKE` requires `#define ENABLE_COMPILE_KEYCODE` in your config.h to function.
+:::

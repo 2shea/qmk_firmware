@@ -1,3 +1,2 @@
-BLUETOOTH = AdafruitBLE
-ADAFRUIT_BLE_ENABLE = yes
+# Processor frequency
 F_CPU = 8000000
